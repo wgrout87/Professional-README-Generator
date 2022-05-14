@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 
 const { writeFile } = require('./utils/generate-file.js');
 
-const generateMarkdown = require('./utils/generateMarkdown.js');
+const { generateMarkdown } = require('./utils/generateMarkdown.js');
 
 
 
@@ -28,3 +28,5 @@ function init() {}
 
 // Function call to initialize app
 init();
+data = {};
+writeFile(generateMarkdown(data));
