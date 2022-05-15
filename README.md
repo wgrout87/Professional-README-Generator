@@ -5,6 +5,8 @@
 
 This is a command line application for generating a README.md file. It was written using JavaScript to run with Node.js. When run, the user is prompted to fill out information that will provide the content of their README file. The generated file is output into the dist folder that is within the same directory as the application.
 
+A sample README created by the application has been added into the folder titled "sample".
+
 ## Links
 
 [Code repository](https://github.com/wgrout87/Professional-README-Generator)
