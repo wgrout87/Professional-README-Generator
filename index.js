@@ -259,7 +259,7 @@ init()
     .then(data => generateMarkdown(data))
     .then(md => writeFile(md))
     .then(response => {
-        console.log(response);
+        console.log(response.message);
     })
     .catch(err => {
         console.log(err);
