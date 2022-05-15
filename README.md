@@ -44,5 +44,7 @@ Any contributions to this open source project on GitHub are welcome. The standar
 ## Questions
 
 My GitHub Profile: [https://github.com/wgrout87](https://github.com/wgrout87)
+
 wgrout87@gmail.com
+
 Please feel free to email me with questions. Mention the Professional README Generator in the subject line.

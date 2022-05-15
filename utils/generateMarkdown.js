@@ -46,7 +46,7 @@ function generateMarkdown(data) {
         // Generates a questions section
         if (data.questions) {
             markdown += `\n- [Questions](#questions)`;
-            questionsSection = `\n\n## Questions\n\nMy GitHub Profile: [https://github.com/${data.github}](https://github.com/${data.github})\n${data.questions.email}\n${data.questions.contact}`;
+            questionsSection = `\n\n## Questions\n\nMy GitHub Profile: [https://github.com/${data.github}](https://github.com/${data.github})\n\n${data.questions.email}\n\n${data.questions.contact}`;
         };
     }
     // Adds all sections into the markdown for the README
