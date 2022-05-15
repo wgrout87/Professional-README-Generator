@@ -20,32 +20,32 @@ function generateMarkdown(data) {
         markdown += `\n\n## Table of Contents\n`;
         // Generates an installation section
         if (data.installation) {
-            markdown += `\n-[Installation](#installation)`;
+            markdown += `\n- [Installation](#installation)`;
             installationSection = `\n\n## Installation\n\n${data.installation}`;
         };
         // Generates a usage section
         if (data.usage) {
-            markdown += `\n-[Usage](#usage)`;
+            markdown += `\n- [Usage](#usage)`;
             usageSection = `\n\n## Usage\n\n${data.usage}`;
         };
         // Generates a license section
         if (data.license.text) {
-            markdown += `\n-[License](#license)`;
+            markdown += `\n- [License](#license)`;
             licenseSection = `\n\n## License\n\nCopyright ${year.getFullYear()} ${data.name}\n\n${data.license.text}`;
         };
         // Generates a contributing section
         if (data.contributing) {
-            markdown += `\n-[Contributing](#contributing)`;
+            markdown += `\n- [Contributing](#contributing)`;
             contributingSection = `\n\n## Contributing\n\n${data.contributing}`;
         };
         // Generates a tests section
         if (data.tests) {
-            markdown += `\n-[Tests](#tests)`;
+            markdown += `\n- [Tests](#tests)`;
             testsSection = `\n\n## Tests\n\n${data.tests}`;
         };
         // Generates a questions section
         if (data.questions) {
-            markdown += `\n-[Questions](#questions)`;
+            markdown += `\n- [Questions](#questions)`;
             questionsSection = `\n\n## Questions\n\nMy GitHub Profile: [https://github.com/${data.github}](https://github.com/${data.github})\n${data.questions.email}\n${data.questions.contact}`;
         };
     }

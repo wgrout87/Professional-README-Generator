@@ -11,11 +11,11 @@ This is a command line application for generating a README.md file. It was writt
 
 ## Table of Contents
 
--[Installation](#installation)
--[Usage](#usage)
--[License](#license)
--[Contributing](#contributing)
--[Questions](#questions)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Questions](#questions)
 
 ## Installation
 
