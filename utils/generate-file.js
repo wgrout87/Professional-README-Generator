@@ -1,8 +1,13 @@
-const fs = require('fs');
+const fs = require("fs");
 
 const writeFile = fileContent => {
+    if (!fs.existsSync("./dist")) {
+        fs.mkdir("./dist", (err) => {
+            if (err) throw err;
+        });
+    };
     return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/README.md', fileContent, err => {
+        fs.writeFile("./dist/README.md", fileContent, err => {
             if (err) {
                 reject(err);
                 return;
@@ -10,7 +15,7 @@ const writeFile = fileContent => {
 
             resolve({
                 ok: true,
-                message: 'README created!'
+                message: "README created!"
             });
         });
     });

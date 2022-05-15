@@ -4,7 +4,7 @@ function generateMarkdown(data) {
     let markdown = `# ${data.title}\n${data.license.badge}\n## Description\n\n${data.description}\n\n## Links\n\n[Code repository](https://github.com/${data.github}/${data.repository})`;
     // Possible sections for inclusion in the generated README
     if (data.pages) {
-        let githubLink = `\n[Deployed website](https://${data.github}.github.io/${data.repository})/`;
+        let githubLink = `\n[Deployed website](https://${data.github}.github.io/${data.repository}/)`;
         markdown += githubLink;
     }
     let installationSection = ``;
