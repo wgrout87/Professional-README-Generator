@@ -1,62 +1,74 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {}
-
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(license) {}
-
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {}
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  return `# ${data.title}
-  ${data.license.badge}
+    let markdown = `# ${data.title}\n${data.license.badge}\n## Description\n\n${data.description}\n\n## Links\n\n[Code repository](https://github.com/${data.github}/${data.repository})`;
+    if (data.installation || data.usage || data.license.text || data.contributing || data.tests || data.questions) {
+        markdown += `\n\n## Table of Contents`;
+        if (data.installation) {
+            markdown += `\n\n-[Installation](#installation)`
+        };
+        if (data.usage) {
+            markdown += `\n-[Usage](#usage)`
+        };
+        if (data.license.text) {
+            markdown += `\n-[License](#license)`
+        };
+        if (data.contributing) {
+            markdown += `\n-[Contributing](#contributing)`
+        };
+        if (data.tests) {
+            markdown += `\n-[Tests](#tests)`
+        };
+        if (data.questions) {
+            markdown += `\n-[Questions](#questions)`
+        };
+    }
+    return markdown;
+    // return `# ${data.title}
+    // ${data.license.badge}
 
-  ## Description
+    // ## Description
 
-  ${data.description}
+    // ${data.description}
 
-  ## Links
+    // ## Links
 
-  [Code repository](https://github.com/${data.github}/${data.repository})
+    // [Code repository](https://github.com/${data.github}/${data.repository})
 
-  ## Table of Contents
+    // ## Table of Contents
 
-  -[Installation](#installation)  
-  -[Usage](#usage)
-  -[License](#license)
-  -[Contributing](#contributing)
-  -[Tests](#tests)
-  -[Questions](#questions)
+    // -[Installation](#installation)  
+    // -[Usage](#usage)
+    // -[License](#license)
+    // -[Contributing](#contributing)
+    // -[Tests](#tests)
+    // -[Questions](#questions)
 
-  ## Installation
+    // ## Installation
 
-  ${data.installation}
+    // ${data.installation}
 
-  ## Usage
+    // ## Usage
 
-  ${data.usage}
+    // ${data.usage}
 
-  ## License
+    // ## License
 
-  ${data.license.text}
+    // ${data.license.text}
 
-  ## Contributing
+    // ## Contributing
 
-  ${data.contributing}
+    // ${data.contributing}
 
-  ## Tests
+    // ## Tests
 
-  ${data.tests}
+    // ${data.tests}
 
-  ## Questions
+    // ## Questions
 
-  ${data.questions.email}
-  ${data.questions.contact}
-  `;
+    // ${data.questions.email}
+    // ${data.questions.contact}
+    // `;
 }
 
 module.exports = { generateMarkdown };

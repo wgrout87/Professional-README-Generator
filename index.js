@@ -146,7 +146,9 @@ const licensePrompt = readmeData => {
             readmeData.license = licenses[licenseData.license];
             return readmeData;
         })
-    }
+    } else {
+        readmeData.license = {text: "", badge: ""}
+    };
     return readmeData;
 };
 
@@ -214,4 +216,6 @@ init()
     .then(contributingPrompt)
     .then(testsPrompt)
     .then(questionsPrompt)
-    .then(data => console.log(data));
+    .then(data => generateMarkdown(data))
+    .then(md => writeFile(md));
+    // .then(data => console.log(data));
