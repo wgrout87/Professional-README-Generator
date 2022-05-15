@@ -11,12 +11,15 @@ const { generateMarkdown } = require("./utils/generateMarkdown.js");
 
 // TODO: Create an object whose properties are questions for user input
 const questions = {
+    name: "What is your name? (Required)",
+    nameValidate: "Please enter your name!",
     github: "What is your GitHub username? (Required)",
     githubValidate: "Please enter your GitHub username!",
     repository: "What is the repository name on GitHub? (Required)",
     repositoryValidate: "Please enter a repository name!",
     title: "What is the title of your project? (Required)",
     titleValidate: "Please enter a project title!",
+    pages: "Is the application deployed to GitHub pages?",
     description: "Please enter a description of your project. (Required)",
     descriptionValidate: "Please enter a description for the project!",
     contents: "Please select the sections you would like to include in your README.",
@@ -31,13 +34,25 @@ const questions = {
 
 
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) { }
-
 // TODO: Create a function to initialize app
 function init() {
     return inquirer.prompt([
         {
+            // Prompt to retrieve the user's name
+            type: "input",
+            name: "name",
+            message: questions.name,
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log(questions.nameValidate);
+                    return false;
+                }
+            }
+        },
+        {
+            // Prompt to retrieve the github user name
             type: "input",
             name: "github",
             message: questions.github,
@@ -51,6 +66,7 @@ function init() {
             }
         },
         {
+            // Prompt to retrieve the github repository name
             type: "input",
             name: "repository",
             message: questions.repository,
@@ -64,6 +80,7 @@ function init() {
             }
         },
         {
+            // Prompt to retrieve the project title
             type: "input",
             name: "title",
             message: questions.title,
@@ -77,6 +94,14 @@ function init() {
             }
         },
         {
+            // Prompt to determine if a link to a deployed application should be included
+            type: "confirm",
+            name: "pages",
+            message: questions.pages,
+            default: false
+        },
+        {
+            // Prompt to retrieve the project description
             type: "input",
             name: "description",
             message: questions.description,
@@ -90,6 +115,7 @@ function init() {
             }
         },
         {
+            // Prompt to determine which sections to include in the generated README
             type: "checkbox",
             name: "contents",
             message: questions.contents,
@@ -98,6 +124,7 @@ function init() {
     ])
 };
 
+// Prompt to be displayed if the user chose to add an installation section
 const installationPrompt = readmeData => {
     if (readmeData.contents.includes("Installation")) {
         return inquirer.prompt([
@@ -107,14 +134,16 @@ const installationPrompt = readmeData => {
                 message: questions.installation
             }
         ])
-        .then(installationData => {
-            readmeData.installation = installationData.installation;
-            return readmeData;
-        })
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(installationData => {
+                readmeData.installation = installationData.installation;
+                return readmeData;
+            })
     }
     return readmeData;
 };
 
+// Prompt to be displayed if the user chose to add a usage section
 const usagePrompt = readmeData => {
     if (readmeData.contents.includes("Usage")) {
         return inquirer.prompt([
@@ -124,14 +153,16 @@ const usagePrompt = readmeData => {
                 message: questions.usage
             }
         ])
-        .then(usageData => {
-            readmeData.usage = usageData.usage;
-            return readmeData;
-        })
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(usageData => {
+                readmeData.usage = usageData.usage;
+                return readmeData;
+            })
     }
     return readmeData;
 };
 
+// Prompt to be displayed if the user chose to add a license section
 const licensePrompt = readmeData => {
     if (readmeData.contents.includes("License")) {
         return inquirer.prompt([
@@ -142,16 +173,20 @@ const licensePrompt = readmeData => {
                 choices: Object.keys(licenses)
             }
         ])
-        .then(licenseData => {
-            readmeData.license = licenses[licenseData.license];
-            return readmeData;
-        })
-    } else {
-        readmeData.license = {text: "", badge: ""}
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(licenseData => {
+                readmeData.license = licenses[licenseData.license];
+                return readmeData;
+            })
+    }
+    // If license wasn't chosen, it is given empty strings as values to avoid breaking the generateMarkdown code
+    else {
+        readmeData.license = { text: "", badge: "" }
     };
     return readmeData;
 };
 
+// Prompt to be displayed if the user chose to add a contributing section
 const contributingPrompt = readmeData => {
     if (readmeData.contents.includes("Contributing")) {
         return inquirer.prompt([
@@ -161,14 +196,16 @@ const contributingPrompt = readmeData => {
                 message: questions.contributing
             }
         ])
-        .then(contributingData => {
-            readmeData.contributing = contributingData.contributing;
-            return readmeData;
-        })
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(contributingData => {
+                readmeData.contributing = contributingData.contributing;
+                return readmeData;
+            })
     }
     return readmeData;
 };
 
+// Prompt to be displayed if the user chose to add a tests section
 const testsPrompt = readmeData => {
     if (readmeData.contents.includes("Tests")) {
         return inquirer.prompt([
@@ -178,14 +215,16 @@ const testsPrompt = readmeData => {
                 message: questions.tests
             }
         ])
-        .then(testsData => {
-            readmeData.tests = testsData.tests;
-            return readmeData;
-        })
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(testsData => {
+                readmeData.tests = testsData.tests;
+                return readmeData;
+            })
     }
     return readmeData;
 };
 
+// Prompt to be displayed if the user chose to add a questions section
 const questionsPrompt = readmeData => {
     if (readmeData.contents.includes("Questions")) {
         return inquirer.prompt([
@@ -200,10 +239,11 @@ const questionsPrompt = readmeData => {
                 message: questions.contact
             }
         ])
-        .then(questionsData => {
-            readmeData.questions = questionsData;
-            return readmeData;
-        })
+            // Adds the input from this prompt to the data from previous prompts and returns it all for further use
+            .then(questionsData => {
+                readmeData.questions = questionsData;
+                return readmeData;
+            })
     }
     return readmeData;
 };
@@ -218,4 +258,3 @@ init()
     .then(questionsPrompt)
     .then(data => generateMarkdown(data))
     .then(md => writeFile(md));
-    // .then(data => console.log(data));
