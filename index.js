@@ -1,6 +1,8 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 
+const { licenses } = require("./utils/licenses.js");
+
 const { writeFile } = require("./utils/generate-file.js");
 
 const { generateMarkdown } = require("./utils/generateMarkdown.js");
@@ -11,6 +13,8 @@ const { generateMarkdown } = require("./utils/generateMarkdown.js");
 const questions = {
     github: "What is your GitHub username? (Required)",
     githubValidate: "Please enter your GitHub username!",
+    repository: "What is the repository name on GitHub? (Required)",
+    repositoryValidate: "Please enter a repository name!",
     title: "What is the title of your project? (Required)",
     titleValidate: "Please enter a project title!",
     description: "Please enter a description of your project. (Required)",
@@ -21,7 +25,8 @@ const questions = {
     license: "Which license would you like to use?",
     contributing: "How can others contribute to this project?",
     tests: "What tests can be run to ensure functionality?",
-    questions: "How can you be reached for questions?"
+    email: "What is your email address?",
+    contact: "How can you be reached for questions?"
 };
 
 
@@ -41,6 +46,19 @@ function init() {
                     return true;
                 } else {
                     console.log(questions.githubValidate);
+                    return false;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "repository",
+            message: questions.repository,
+            validate: repositoryInput => {
+                if (repositoryInput) {
+                    return true;
+                } else {
+                    console.log(questions.repositoryValidate);
                     return false;
                 }
             }
@@ -118,13 +136,14 @@ const licensePrompt = readmeData => {
     if (readmeData.contents.includes("License")) {
         return inquirer.prompt([
             {
-                type: "input",
+                type: "list",
                 name: "license",
-                message: questions.license
+                message: questions.license,
+                choices: Object.keys(licenses)
             }
         ])
         .then(licenseData => {
-            readmeData.license = licenseData.license;
+            readmeData.license = licenses[licenseData.license];
             return readmeData;
         })
     }
@@ -170,12 +189,17 @@ const questionsPrompt = readmeData => {
         return inquirer.prompt([
             {
                 type: "input",
-                name: "questions",
-                message: questions.questions
+                name: "email",
+                message: questions.email
+            },
+            {
+                type: "input",
+                name: "contact",
+                message: questions.contact
             }
         ])
         .then(questionsData => {
-            readmeData.questions = questionsData.questions;
+            readmeData.questions = questionsData;
             return readmeData;
         })
     }
