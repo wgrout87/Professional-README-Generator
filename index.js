@@ -1,32 +1,193 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 
-const { writeFile } = require('./utils/generate-file.js');
+const { writeFile } = require("./utils/generate-file.js");
 
-const { generateMarkdown } = require('./utils/generateMarkdown.js');
+const { generateMarkdown } = require("./utils/generateMarkdown.js");
 
 
 
-// TODO: Create an array of questions for user input
-const questions = [
-    "What is the title of your project?",
-    "Please enter a description of your project.",
-    "Please select the sections you would like to include in your README.",
-    "What are the steps required to install your project.",
-    "Please provide instructions and examples for use.",
-    "Which license would you like to use?",
-    "How can others contribute to this project?",
-    "What tests can be run to ensure functionality?",
-    "How can you be reached for questions?"
-];
+// TODO: Create an object whose properties are questions for user input
+const questions = {
+    github: "What is your GitHub username? (Required)",
+    githubValidate: "Please enter your GitHub username!",
+    title: "What is the title of your project? (Required)",
+    titleValidate: "Please enter a project title!",
+    description: "Please enter a description of your project. (Required)",
+    descriptionValidate: "Please enter a description for the project!",
+    contents: "Please select the sections you would like to include in your README.",
+    installation: "What are the steps required to install your project.",
+    usage: "Please provide instructions and examples for use.",
+    license: "Which license would you like to use?",
+    contributing: "How can others contribute to this project?",
+    tests: "What tests can be run to ensure functionality?",
+    questions: "How can you be reached for questions?"
+};
+
+
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) { }
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "github",
+            message: questions.github,
+            validate: githubInput => {
+                if (githubInput) {
+                    return true;
+                } else {
+                    console.log(questions.githubValidate);
+                    return false;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "title",
+            message: questions.title,
+            validate: titleInput => {
+                if (titleInput) {
+                    return true;
+                } else {
+                    console.log(questions.titleValidate);
+                    return false;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "description",
+            message: questions.description,
+            validate: descriptionInput => {
+                if (descriptionInput) {
+                    return true;
+                } else {
+                    console.log(questions.descriptionValidate);
+                    return false;
+                }
+            }
+        },
+        {
+            type: "checkbox",
+            name: "contents",
+            message: questions.contents,
+            choices: ["Installation", "Usage", "License", "Contributing", "Tests", "Questions"]
+        }
+    ])
+};
+
+const installationPrompt = readmeData => {
+    if (readmeData.contents.includes("Installation")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "installation",
+                message: questions.installation
+            }
+        ])
+        .then(installationData => {
+            readmeData.installation = installationData.installation;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
+
+const usagePrompt = readmeData => {
+    if (readmeData.contents.includes("Usage")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "usage",
+                message: questions.usage
+            }
+        ])
+        .then(usageData => {
+            readmeData.usage = usageData.usage;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
+
+const licensePrompt = readmeData => {
+    if (readmeData.contents.includes("License")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "license",
+                message: questions.license
+            }
+        ])
+        .then(licenseData => {
+            readmeData.license = licenseData.license;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
+
+const contributingPrompt = readmeData => {
+    if (readmeData.contents.includes("Contributing")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "contributing",
+                message: questions.contributing
+            }
+        ])
+        .then(contributingData => {
+            readmeData.contributing = contributingData.contributing;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
+
+const testsPrompt = readmeData => {
+    if (readmeData.contents.includes("Tests")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "tests",
+                message: questions.tests
+            }
+        ])
+        .then(testsData => {
+            readmeData.tests = testsData.tests;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
+
+const questionsPrompt = readmeData => {
+    if (readmeData.contents.includes("Questions")) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "questions",
+                message: questions.questions
+            }
+        ])
+        .then(questionsData => {
+            readmeData.questions = questionsData.questions;
+            return readmeData;
+        })
+    }
+    return readmeData;
+};
 
 // Function call to initialize app
-init();
-data = {};
-writeFile(generateMarkdown(data));
+init()
+    .then(installationPrompt)
+    .then(usagePrompt)
+    .then(licensePrompt)
+    .then(contributingPrompt)
+    .then(testsPrompt)
+    .then(questionsPrompt)
+    .then(data => console.log(data));
