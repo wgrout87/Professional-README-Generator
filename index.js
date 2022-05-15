@@ -257,4 +257,10 @@ init()
     .then(testsPrompt)
     .then(questionsPrompt)
     .then(data => generateMarkdown(data))
-    .then(md => writeFile(md));
+    .then(md => writeFile(md))
+    .then(response => {
+        console.log(response);
+    })
+    .catch(err => {
+        console.log(err);
+    });
